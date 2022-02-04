@@ -13,7 +13,6 @@ import 'package:wnees_demo/values/image_constants.dart';
 import 'package:wnees_demo/values/omi_extensions.dart';
 import 'package:wnees_demo/values/styles.dart';
 import 'package:wnees_demo/widgets/button_widget.dart';
-import 'package:wnees_demo/widgets/common_circular_progress_indicator.dart';
 
 class EntertainerServicePage extends StatefulWidget {
   const EntertainerServicePage({Key? key}) : super(key: key);
@@ -54,71 +53,73 @@ class _EntertainerServicePageState extends State<EntertainerServicePage> {
           buildServiceAppBar(sampleData, context),
 
           //EntertainerList
-          Container(
-            child: Expanded(
-              child: StreamBuilder<ServicesResponse?>(
-                  stream: _servicesBloc.serviceResponse,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List<Entertainer>? entertainerList;
-                      if (snapshot.data!.entertainer != null) {
-                        entertainerList = snapshot.data!.entertainer!;
-                      }
-                      return AnimationLimiter(
-                        child: ListView.builder(
-                            physics: const BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: entertainerList?.length ?? 0,
-                            itemBuilder: (context, index) {
-                              final sampleData = entertainerList![index];
-                              return AnimationConfiguration.staggeredGrid(
-                                  position: index,
-                                  columnCount: entertainerList.length,
-                                  child: ScaleAnimation(
-                                      scale: 0.8,
-                                      child: _entertainerItem(
-                                          context, sampleData)));
-                            }),
-                      );
-                    } else {
-                      return CommonCircularProgressIndicator();
+          Expanded(
+            child: StreamBuilder<ServicesResponse?>(
+                stream: _servicesBloc.serviceResponse,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Entertainer>? entertainerList;
+                    if (snapshot.data!.entertainer != null) {
+                      entertainerList = snapshot.data!.entertainer!;
                     }
-                    /*  if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            List<Entertainer> entertainerList;
-                            if (snapshot.data.entertainer != null) {
-                              entertainerList = snapshot.data.entertainer;
-                            }
-                            return AnimationLimiter(
-                              child: ListView.builder(
-                                  physics: const BouncingScrollPhysics(
-                                      parent: AlwaysScrollableScrollPhysics()),
-                                  itemCount: entertainerList.length,
-                                  itemBuilder: (context, index) {
-                                    final sampleData = entertainerList[index];
-                                    return AnimationConfiguration.staggeredGrid(
-                                        position: index,
-                                        columnCount: entertainerList.length,
-                                        child: ScaleAnimation(
-                                            scale: 0.8,
-                                            child: _entertainerItem(
-                                                context, sampleData)));
-                                  }),
-                            );
-                          }
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          }
+                    return AnimationLimiter(
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          itemCount: entertainerList?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            final sampleData = entertainerList![index];
+                            return AnimationConfiguration.staggeredGrid(
+                                position: index,
+                                columnCount: entertainerList.length,
+                                child: ScaleAnimation(
+                                    scale: 0.8,
+                                    child:
+                                        _entertainerItem(context, sampleData)));
+                          }),
+                    );
+                  } else {
+                    return const Align(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          color: colors.accentColor,
+                        ));
+                  }
+                  /*  if (snapshot.connectionState ==
+                             ConnectionState.done) {
+                           List<Entertainer> entertainerList;
+                           if (snapshot.data.entertainer != null) {
+                             entertainerList = snapshot.data.entertainer;
+                           }
+                           return AnimationLimiter(
+                             child: ListView.builder(
+                                 physics: const BouncingScrollPhysics(
+                                     parent: AlwaysScrollableScrollPhysics()),
+                                 itemCount: entertainerList.length,
+                                 itemBuilder: (context, index) {
+                                   final sampleData = entertainerList[index];
+                                   return AnimationConfiguration.staggeredGrid(
+                                       position: index,
+                                       columnCount: entertainerList.length,
+                                       child: ScaleAnimation(
+                                           scale: 0.8,
+                                           child: _entertainerItem(
+                                               context, sampleData)));
+                                 }),
+                           );
+                         }
+                         if (snapshot.connectionState ==
+                             ConnectionState.waiting) {
+                           return CircularProgressIndicator();
+                         }
 */
-                    /*if (snapshot.connectionState ==
-                                  ConnectionState.none ||
-                              snapshot.connectionState ==
-                                  ConnectionState.active) {
-                            return "No data found".text.make();
-                          }*/
-                  }),
-            ),
+                  /*if (snapshot.connectionState ==
+                                 ConnectionState.none ||
+                             snapshot.connectionState ==
+                                 ConnectionState.active) {
+                           return "No data found".text.make();
+                         }*/
+                }),
           )
         ],
       ),
@@ -248,7 +249,7 @@ class _EntertainerServicePageState extends State<EntertainerServicePage> {
                         }),
                   );
                 } else {
-                  return const CircularProgressIndicator();
+                  return Container();
                 }
               }),
         )

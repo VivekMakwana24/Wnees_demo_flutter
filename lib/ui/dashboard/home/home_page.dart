@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             stream: _homeBloc.showLoading,
             builder: (context, snapshot) {
               return Loading(
-                status: snapshot.data!,
+                status: snapshot.data ?? false,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
                   child: Column(

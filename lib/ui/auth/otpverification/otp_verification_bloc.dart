@@ -31,7 +31,7 @@ class OtpVerificationBloc extends Bloc {
 
   Stream<String> get otp => _otpStream.stream /*.transform(validateOtp)*/;
 
-  Stream<bool> get otpValid => Rx.combineLatest([otp], (otp) => true);
+  // Stream<bool> get otpValid => Rx.combineLatest([otp], (otp) => true);
 
   Function(String) get changeOTP => _otpStream.sink.add;
 

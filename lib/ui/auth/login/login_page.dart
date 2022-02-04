@@ -25,7 +25,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late List<ReactionDisposer> _disposers;
-  ValueNotifier showLoading = ValueNotifier<bool>(false);
+  late ValueNotifier<bool> showLoading;
 
   late GlobalKey<FormState> _formKey;
   late TextEditingController _mobileController;
@@ -36,24 +36,26 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    super.initState();
     _formKey = GlobalKey<FormState>();
     _mobileController = TextEditingController();
+    showLoading = ValueNotifier(false);
   }
 
   @override
   void didChangeDependencies() {
-    addDisposer();
     super.didChangeDependencies();
+    addDisposer();
   }
 
   addDisposer() {
     print("Add reaction");
     _disposers = [
-      reaction((_) => authStore.loginResponse, (SingleResponse? response) {
+      reaction((_) => authStore.loginResponse, (SingleResponse response) {
         showLoading.value = false;
         print("ONResponse Login: called ");
-        if (response?.code == "1") {
-          showMessage(response?.message,
+        if (response.code == "1") {
+          showMessage(response.message,
               type: MessageType.INFO, context: context);
           navigator.pushNamed(RoutesName.otpVerification);
         }
@@ -157,24 +159,24 @@ class _LoginPageState extends State<LoginPage> {
                                         width: 20,
                                       ),
                                     ),
-                                    Flexible(
+                                    const Flexible(
                                       flex: 3,
                                       child: AppTextField(
                                         enableInteractiveSelection: false,
                                         enabled: false,
-                                        contentPadding: const EdgeInsets.only(
+                                        contentPadding: EdgeInsets.only(
                                             left: 10.0,
                                             bottom: 18.0,
                                             top: 18.0,
                                             right: -10),
-                                        suffixIcon: const Icon(
+                                        suffixIcon: Icon(
                                           Icons.arrow_drop_down,
                                           color: colors.blackColor,
                                         ),
                                         filled: false,
                                         hint: "+966",
                                         keyboardType: TextInputType.number,
-                                        keyboardAction: TextInputAction.done,
+                                        keyboardAction: TextInputAction.done, label: '+966',
                                       ),
                                     ),
                                     Flexible(
@@ -206,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                               onTap: () {
                                 print("Tapped ");
                                 if (_formKey.currentState!.validate()) {
-                                  showLoading.value = true;
+                                  showLoading.value = false;
                                   authStore.login("+966",
                                       _mobileController.text.toString());
                                 }

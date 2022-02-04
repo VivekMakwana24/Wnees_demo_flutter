@@ -33,6 +33,10 @@ class AppDB {
       defaultValue: "XDXxZUmC2ltIqv81TNwD/G/2E8+6iMptrh24PJhJkEyftV7Ds+iQFlcqtO4zRmAX");
 
   set apiKey(String update) => setValue("apiKey", update);
+
+  logout() {
+    token = "";
+  }
 }
 
 final appDB = locator<AppDB>();

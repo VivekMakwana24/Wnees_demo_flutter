@@ -27,7 +27,7 @@ class HttpClient {
         compact: true,
         maxWidth: 90));
     _client.interceptors.add(InternetInterceptors());
-    _client.interceptors.add(CustomInterceptors());
+    // _client.interceptors.add(CustomInterceptors());
   }
 
   Future<void> _interceptor() async {

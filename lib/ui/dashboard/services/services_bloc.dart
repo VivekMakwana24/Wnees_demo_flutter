@@ -68,7 +68,9 @@ class ServicesBloc extends Bloc {
       _loadingController.sink.add(false);
       print("onCatch.....");
       print(e.toString());
-      showMessage(errorMessage ?? "",
+
+      errorMessage = e.toString();
+      showMessage(errorMessage,
           type: MessageType.ERROR, context: context);
     }
   }

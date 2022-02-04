@@ -38,3 +38,8 @@ class ServerSideException extends AppException {
 class ConnectionException extends AppException {
   ConnectionException([String? message]) : super(message, "Invalid Input: ");
 }
+
+class NoInternetException extends AppException {
+  NoInternetException([String? message])
+      : super(message, "No Active Internet Connection");
+}

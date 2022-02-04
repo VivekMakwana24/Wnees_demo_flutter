@@ -42,8 +42,12 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
         child: StreamBuilder<bool>(
             stream: _otpVerificationBloc.showLoading,
             builder: (context, snapshot) {
+              bool? isLoading = false;
+              if (snapshot.data != null) {
+                isLoading = snapshot.data;
+              }
               return Loading(
-                status: snapshot.data!,
+                status: isLoading,
                 child: Material(
                   color: colors.primaryColor,
                   child: Column(
@@ -112,7 +116,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                   child: Row(
                                     children: [
                                       Flexible(
-                                        child: StreamBuilder<Object>(
+                                        child: StreamBuilder<String>(
                                             stream: _otpVerificationBloc.otp,
                                             builder: (context, snapshot) {
                                               return AppTextField(
@@ -124,7 +128,6 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                                 onChanged: _otpVerificationBloc
                                                     .changeOTP,
                                                 label: "",
-                                                error: snapshot.error.toString(),
                                                 obscureText: true,
                                                 keyboardType:
                                                     TextInputType.number,
@@ -145,8 +148,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                       return StreamBuilder<String>(
                                           stream: _otpVerificationBloc.otp,
                                           builder: (context, otpValid) {
-                                            int otpLength =
-                                                (otpValid.data ?? "").length;
+                                            int? otpLength =
+                                                otpValid.data?.length;
                                             return InkWell(
                                               onTap: () {
                                                 if (!otpValid.hasData) {
@@ -154,7 +157,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                                       "Please enter OTP",
                                                       context: context,
                                                       type: MessageType.ERROR);
-                                                } else if (otpLength < 4) {
+                                                } else if (otpLength! < 4) {
                                                   showMessage(
                                                       "Please enter valid OTP",
                                                       context: context,

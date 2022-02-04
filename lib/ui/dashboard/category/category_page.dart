@@ -48,7 +48,7 @@ class _CategoryPageState extends State<CategoryPage> {
               hint: "Musician",
               filled: true,
               onChanged: (value) {
-                  _categoryBloc.getSubCategoryList(searchText: value);
+                _categoryBloc.getSubCategoryList(searchText: value);
               },
               contentPadding: const EdgeInsets.only(
                   left: 15.0, bottom: 10.0, top: 10.0, right: 15),
@@ -56,13 +56,17 @@ class _CategoryPageState extends State<CategoryPage> {
                 Icons.search,
                 color: colors.blackColor,
               ),
+              label: 'Musician',
             ),
             15.heightBox,
             StreamBuilder<bool>(
                 stream: _categoryBloc.showLoading,
                 builder: (context, snapShotLoading) {
-                  var isLoading = snapShotLoading.data;
-                  print("isLoading $isLoading");
+                  var isLoading = false;
+                  if (snapShotLoading.data != null) {
+                    isLoading = snapShotLoading.data!;
+                    print("isLoading $isLoading");
+                  }
 
                   return StreamBuilder<List<SubCategoryResponse>?>(
                       stream: _categoryBloc.subCategoryResponse,
@@ -70,8 +74,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         List<SubCategoryResponse>? subCategoryList =
                             snapshot.data ?? [];
 
-                        return isLoading!
-                            ? CommonCircularProgressIndicator()
+                        return isLoading? CommonCircularProgressIndicator()
                             : Expanded(
                                 child: AnimationLimiter(
                                 child: StaggeredGridView.countBuilder(

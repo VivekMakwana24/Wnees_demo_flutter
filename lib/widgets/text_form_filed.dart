@@ -1,108 +1,94 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wnees_demo/values/colors.dart';
 import 'package:wnees_demo/values/styles.dart';
 
 class AppTextField extends StatefulWidget {
-  String label, errorText, prefixText;
-  String hint;
-  String error;
-  bool obscureText;
-  TextStyle textStyle;
-  InputDecoration decoration;
-  TextInputAction keyboardAction;
-  TextInputType keyboardType;
-  MultiValidator validators;
-  List<TextInputFormatter> inputFormatters;
-  InputCounterWidgetBuilder buildCounter;
-  int maxLength;
-  Widget prefixIcon;
-  bool enabled;
-  TextEditingController controller;
-  FocusNode focusNode;
-  Function onTap;
-  bool readOnly;
-  bool enableInteractiveSelection;
-  Widget suffixIcon;
-  String initValue;
-  FormFieldSetter<String> onSaved;
-  bool paddingLeft;
-  EdgeInsets contentPadding;
-  int maxLines;
-  int minLines;
-  double height;
-  bool filled;
-  Widget suffix;
-  Widget prefix;
-  Function onChanged;
+  final String label, hint;
+  final String? prefixText, errorText, error;
+  final bool obscureText;
+  final TextStyle? textStyle;
+  final InputDecoration? decoration;
+  final TextInputAction keyboardAction;
+  final TextCapitalization textCapitalization;
+  final TextInputType keyboardType;
+  final FormFieldValidator<String>? validators;
+  final List<TextInputFormatter>? inputFormatters;
+  final InputCounterWidgetBuilder? buildCounter;
+  final int? maxLength;
+  final Widget? prefixIcon;
+  final bool enabled;
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
+  final Function()? onTap;
+  final bool readOnly;
+  final bool enableInteractiveSelection;
+  final Widget? suffixIcon;
+  final String? initValue;
+  final FormFieldSetter<String>? onSaved;
+  final bool paddingLeft;
+  final EdgeInsets? contentPadding;
+  final int maxLines;
+  final double height;
+  final bool filled;
+  final Widget? suffix;
+  final Widget? prefix;
+  final Function(String)? onChanged;
+  final BoxConstraints? prefixIconConstraints;
+  final BoxConstraints? suffixIconConstraints;
+  final bool? isDense;
+  final AutovalidateMode? autoValidateMode;
+  final Iterable<String>? autofillHints;
+  final TextAlignVertical textAlignVertical;
+  final String obscuringCharacter;
+  final FloatingLabelBehavior floatingLabelBehavior;
 
-  AppTextField({
-    String label,
-    String hint,
-    String error,
-    bool obscureText = false,
-    TextStyle textStyle,
-    InputDecoration decoration,
-    TextInputAction keyboardAction = TextInputAction.next,
-    TextInputType keyboardType = TextInputType.text,
-    MultiValidator validators,
-    List<TextInputFormatter> inputFormatters,
-    int maxLength,
-    bool enabled = true,
-    TextEditingController controller,
-    FocusNode focusNode,
-    Function onTap,
-    bool readOnly = false,
-    bool enableInteractiveSelection = true,
-    Widget suffixIcon,
-    String initValue,
-    bool paddingLeft = false,
-    EdgeInsets contentPadding,
-    Widget prefixIcon,
-    FormFieldSetter<String> onSaved,
-    String prefixText,
-    int maxLine = 1,
-    int minLines = 1,
-    double height = 1,
-    bool filled = false,
-    Widget suffix,
-    Widget prefix,
-    Function onChanged,
-  }) {
-    this.label = label;
-    this.hint = hint;
-    this.error = error;
-    this.obscureText = obscureText;
-    this.decoration = decoration;
-    this.textStyle = textStyle;
-    this.keyboardAction = keyboardAction;
-    this.keyboardType = keyboardType;
-    this.validators = validators;
-    this.contentPadding = contentPadding;
-    this.inputFormatters = inputFormatters;
-    this.maxLength = maxLength;
-    this.enabled = enabled;
-    this.focusNode = focusNode;
-    this.controller = controller;
-    this.onTap = onTap;
-    this.readOnly = readOnly;
-    this.enableInteractiveSelection = enableInteractiveSelection;
-    this.suffixIcon = suffixIcon;
-    this.onSaved = onSaved;
-    this.initValue = initValue;
-    this.prefixIcon = prefixIcon;
-    this.prefixText = prefixText;
-    this.paddingLeft = paddingLeft;
-    this.maxLines = maxLine;
-    this.minLines = minLines;
-    this.height = height;
-    this.filled = filled;
-    this.suffix = suffix;
-    this.onChanged = onChanged;
-  }
+  const AppTextField({
+    Key? key,
+    required this.label,
+    required this.hint,
+    this.error,
+    this.obscureText = false,
+    this.textStyle,
+    this.decoration,
+    this.keyboardAction = TextInputAction.next,
+    this.keyboardType = TextInputType.text,
+    this.textCapitalization = TextCapitalization.none,
+    this.validators,
+    this.inputFormatters,
+    this.maxLength,
+    this.enabled = true,
+    this.controller,
+    this.focusNode,
+    this.nextFocusNode,
+    this.onTap,
+    this.readOnly = false,
+    this.enableInteractiveSelection = true,
+    this.suffixIcon,
+    this.initValue,
+    this.paddingLeft = false,
+    this.contentPadding,
+    this.prefixIcon,
+    this.onSaved,
+    this.prefixText,
+    this.maxLines = 1,
+    this.height = 1,
+    this.filled = false,
+    this.suffix,
+    this.prefix,
+    this.onChanged,
+    this.errorText,
+    this.buildCounter,
+    this.prefixIconConstraints,
+    this.suffixIconConstraints,
+    this.isDense,
+    this.autoValidateMode,
+    this.autofillHints,
+    this.textAlignVertical = TextAlignVertical.center,
+    this.obscuringCharacter = "*",
+    this.floatingLabelBehavior = FloatingLabelBehavior.auto,
+  }) : super(key: key);
 
   @override
   _AppTextFieldState createState() => _AppTextFieldState();
@@ -127,7 +113,7 @@ class _AppTextFieldState extends State<AppTextField> {
         enabled: widget.enabled,
         expands: false,
         autofocus: false,
-        minLines: widget.minLines,
+        minLines: 1,
         maxLines: widget.maxLines,
         style: widget.textStyle,
         obscureText: widget.obscureText,
@@ -140,6 +126,7 @@ class _AppTextFieldState extends State<AppTextField> {
         maxLength: widget.maxLength,
         obscuringCharacter: "⬤",
         decoration: InputDecoration(
+          counterText: "",
           counterStyle: textMedium.copyWith(color: colorHint.withOpacity(0.50)),
           filled: false,
           prefixText: widget.prefixText,
@@ -167,8 +154,8 @@ class _AppTextFieldState extends State<AppTextField> {
           errorBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
         ),
-        buildCounter: (BuildContext context,
-                {int currentLength, int maxLength, bool isFocused}) =>
+        buildCounter: (BuildContext? context,
+                {int? currentLength, int? maxLength, bool? isFocused}) =>
             null,
       ),
     );

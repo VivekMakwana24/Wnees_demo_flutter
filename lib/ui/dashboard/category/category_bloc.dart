@@ -25,8 +25,8 @@ class CategoryBloc extends Bloc {
 
   final _subCategoryResponse = BehaviorSubject<List<SubCategoryResponse>?>();
 
-  BehaviorSubject<List<SubCategoryResponse>?> get subCategoryResponse =>
-      _subCategoryResponse;
+  Stream<List<SubCategoryResponse>?> get subCategoryResponse =>
+      _subCategoryResponse.stream;
 
   /*Stream<List<SubCategoryResponse>?> get subCategoryResponse =>
       _subCategoryResponse.stream;*/
@@ -67,7 +67,8 @@ class CategoryBloc extends Bloc {
       _loadingController.sink.add(false);
       print("onCatch.....");
       print(e.toString());
-      showMessage(errorMessage ?? "",
+      errorMessage = e.toString();
+      showMessage(errorMessage,
           type: MessageType.ERROR, context: context);
     }
   }

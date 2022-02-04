@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:mobx/mobx.dart';
 import 'package:wnees_demo/core/locator.dart';
+import 'package:wnees_demo/core/navigation/navigation_service.dart';
+import 'package:wnees_demo/core/navigation/routes.dart';
 import 'package:wnees_demo/di/api/api_base/api_base.dart';
 import 'package:wnees_demo/di/api/app_exceptions.dart';
 import 'package:wnees_demo/di/api/repository/auth_repo.dart';
@@ -21,7 +23,7 @@ abstract class _AuthStoreBase with StoreBase, Store {
   @observable
   UnauthorisedException? unauthorisedException;
 
-  late SingleResponse? loginResponse;
+  late SingleResponse loginResponse;
 
   // final authRepo = AuthRepository();
 
@@ -36,11 +38,12 @@ abstract class _AuthStoreBase with StoreBase, Store {
     try {
       var commonStoreFuture =
           ObservableFuture(authRepo.login(data));
-      loginResponse = await commonStoreFuture;
+      loginResponse = (await commonStoreFuture);
 
-      if (loginResponse?.code == "1") {
+      if (loginResponse.code == "1") {
+        navigator.pushNamed(RoutesName.otpVerification);
       } else {
-        errorMessage = loginResponse?.message;
+        errorMessage = loginResponse.message;
       }
     } on UnauthorisedException catch (e) {
       unauthorisedException = e;

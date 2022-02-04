@@ -25,4 +25,5 @@ class StringConstants {
 
   static String somethingWentWrong="Something went wrong";
 
+
 }
