@@ -19,4 +19,5 @@ class ImageConstants {
   static var dummy_cat = "assets/images/ic_dummy_musician.png";
   static var gradient = "assets/images/ic_category_gradient.png";
   static var ic_unfavourite = "assets/images/ic_unfavourite.png";
+  static var ic_rect_green = "assets/images/ic_rect_green.png";
 }

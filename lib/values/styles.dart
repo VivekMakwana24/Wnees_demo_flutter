@@ -43,6 +43,17 @@ TextStyle textMediumSecondary(BuildContext context, {double number = .018}) {
   );
 }
 
+TextStyle textMedium2(BuildContext context,
+    {double number = .018, Color color = colors.primaryTextColor}) {
+  return TextStyle(
+    decoration: TextDecoration.none,
+    fontFamily: fontName,
+    fontWeight: FontWeight.w500,
+    fontSize: height(context) * number,
+    color: color,
+  );
+}
+
 TextStyle textLightBlack(BuildContext context, {double number = .018}) {
   return TextStyle(
     decoration: TextDecoration.none,
@@ -85,6 +96,13 @@ final textMedium14 = TextStyle(
   fontSize: 14,
   color: Colors.black,
 );
+final textMedium14White = TextStyle(
+  decoration: TextDecoration.none,
+  fontFamily: fontName,
+  fontWeight: FontWeight.w500,
+  fontSize: 14,
+  color: Colors.white,
+);
 
 final textBold = TextStyle(
   decoration: TextDecoration.none,
@@ -118,7 +136,6 @@ final textBold14White = TextStyle(
   color: Colors.white,
 );
 
-
 TextStyle textBoldBlue(BuildContext context, double number) {
   return TextStyle(
     decoration: TextDecoration.none,
@@ -149,7 +166,8 @@ TextStyle textSemiBoldBlack(BuildContext context, double number) {
   );
 }
 
-TextStyle textRegularBlack(BuildContext context, double number,{Color? color}) {
+TextStyle textRegularBlack(BuildContext context, double number,
+    {Color? color}) {
   return TextStyle(
     decoration: TextDecoration.none,
     fontFamily: fontName,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wnees_demo/values/colors.dart';
@@ -30,12 +29,16 @@ class AppButton extends StatelessWidget {
       child: MaterialButton(
         elevation: this.elevation,
         padding: padding != null
-            ? EdgeInsets.only(top: padding!, bottom: padding!,right: padding!,left: padding!)
+            ? EdgeInsets.only(
+                top: padding!,
+                bottom: padding!,
+                right: padding!,
+                left: padding!)
             : const EdgeInsets.only(top: 15.0, bottom: 15.0),
         onPressed: callback,
         child: Text(
           label!,
-          style: textBold14White,
+          style: textMedium14White,
         ),
         color: buttonColor! ? redColor : primaryColorDark,
         shape: RoundedRectangleBorder(

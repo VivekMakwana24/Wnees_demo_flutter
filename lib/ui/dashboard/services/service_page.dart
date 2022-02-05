@@ -258,6 +258,9 @@ class _EntertainerServicePageState extends State<EntertainerServicePage> {
   }
 
   Widget _entertainerItem(BuildContext context, Entertainer sampleData) {
+    bool isDayVisible = (sampleData.perDayPrice! > 0) ? true : false;
+    bool isHourVisible = (sampleData.perHourPrice! > 0) ? true : false;
+
     return Padding(
       padding: const EdgeInsets.only(top: 0, bottom: 20, left: 16, right: 16),
       child: InkWell(
@@ -352,34 +355,58 @@ class _EntertainerServicePageState extends State<EntertainerServicePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            flex: 5,
-                            child: Container(
-                              height: 35,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: colors.editTextBg),
-                              child: "50 SAR / Day"
-                                  .text
-                                  .align(TextAlign.center)
-                                  .make()
-                                  .p8(),
+                          Visibility(
+                            visible:
+                                (sampleData.perDayPrice! > 0) ? true : false,
+                            child: Flexible(
+                              fit: FlexFit.tight,
+                              child: Container(
+                                height: 35,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: colors.editTextBg),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: RichText(
+                                    text: TextSpan(
+                                        text: "SAR ${sampleData.perDayPrice}",
+                                        style: textBold14,
+                                        children: [
+                                          TextSpan(
+                                            text: " / Day",
+                                            style: textLight12(context),
+                                          )
+                                        ]),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           15.widthBox,
-                          Expanded(
-                            flex: 5,
-                            child: Container(
-                              height: 35,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: colors.editTextBg),
-                              child: "30 SAR / Hour"
-                                  .text
-                                  .align(TextAlign.center)
-                                  .maxLines(1)
-                                  .make()
-                                  .p8(),
+                          Visibility(
+                            visible:  (sampleData.perHourPrice! > 0) ? true : false,
+                            child: Flexible(
+                              fit: FlexFit.tight,
+                              child: Container(
+                                height: 35,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: colors.editTextBg),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: RichText(
+                                    text: TextSpan(
+                                        text: "SAR ${sampleData.perHourPrice}",
+                                        style: textBold14,
+                                        children: [
+                                          TextSpan(
+                                            text: " / Hour",
+                                            style: textLight12(context),
+                                          )
+                                        ]),
+                                  ),
+                                ),
+                              ),
                             ),
                           )
                         ],
